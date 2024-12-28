@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis GIFs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        img {
+            max-width: 300px;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Mis GIFs Animados</h1>
+    <div class="container">
+        <!-- Aquí los GIFs aparecerán automáticamente -->
+        <script>
+            const gifs = [];
+            fetch('./')
+                .then(response => response.text())
+                .then(text => {
+                    const parser = new DOMParser();
+                    const html = parser.parseFromString(text, 'text/html');
+                    const links = html.querySelectorAll('a');
+                    links.forEach(link => {
+                        if (link.href.endsWith('.gif')) {
+                            gifs.push(link.href);
+                        }
+                    });
+                    const container = document.querySelector('.container');
+                    gifs.forEach(gif => {
+                        const img = document.createElement('img');
+                        img.src = gif;
+                        container.appendChild(img);
+                    });
+                });
+        </script>
+    </div>
+</body>
+</html>
