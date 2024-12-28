@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soobin GIFs</title>
+  <style>
+    img {
+      max-width: 300px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Soobin GIFs</h1>
+  <div id="gif-container"></div>
+
+  <script>
+    // Lee automáticamente los GIFs de la carpeta actual
+    fetch(window.location.href)
+      .then(response => response.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const gifContainer = document.getElementById("gif-container");
+        
+        // Busca todos los archivos .gif
+        Array.from(doc.links).forEach(link => {
+          if (link.href.endsWith(".gif")) {
+            const img = document.createElement("img");
+            img.src = link.href; // URL completa del GIF
+            gifContainer.appendChild(img); // Agrega el GIF al contenedor
+          }
+        });
+      });
+  </script>
+</body>
+</html>
