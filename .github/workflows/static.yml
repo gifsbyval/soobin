@@ -1,0 +1,61 @@
+# Simple workflow for deploying static content to GitHub Pages
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis GIFs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #333;
+            margin-top: 20px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+        }
+        img {
+            max-width: 300px;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Mis GIFs Animados</h1>
+    <div class="container" id="gif-container">
+        <!-- Los GIFs se insertarán aquí dinámicamente -->
+    </div>
+
+    <script>
+        // Generar automáticamente los GIFs en la carpeta
+        const gifs = [
+            // Lista de nombres de archivos GIF generada automáticamente
+            "gif1.gif",
+            "gif2.gif",
+            "gif3.gif"
+        ];
+
+        const container = document.getElementById("gif-container");
+
+        gifs.forEach(gif => {
+            const img = document.createElement("img");
+            img.src = gif;
+            img.alt = GIF: ${gif};
+            container.appendChild(img);
+        });
+    </script>
+</body>
+</html>
