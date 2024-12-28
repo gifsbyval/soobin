@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis GIFs por Carpetas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    .folder {
+      margin: 20px;
+    }
+    h2 {
+      text-transform: capitalize;
+      font-size: 1.5em;
+      color: #555;
+    }
+    img {
+      max-width: 300px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mis GIFs por Carpetas</h1>
+  <div id="content"></div>
+
+  <script>
+    // URL base del repositorio en GitHub
+    const repoURL = "https://api.github.com/repos/dollieourgifs/gifs/contents/";
+
+    // Contenedor principal donde se mostrarán los GIFs
+    const content = document.getElementById('content');
+
+    // Función para cargar archivos desde una carpeta
+    function loadFolder(folderName, folderURL) {
+      fetch(folderURL)
+        .then(response => response.json())
+        .then(files => {
+          const folderDiv = document.createElement('div');
+          folderDiv.classList.add('folder');
+
+          const title = document.createElement('h2');
+          title.textContent = folderName;
+          folderDiv.appendChild(title);
+
+          files.forEach(file => {
+            if (file.name.endsWith('.gif')) { // Verificar que es un GIF
+              const img = document.createElement('img');
+              img.src = file.download_url;
+              img.alt = file.name;
+              folderDiv.appendChild(img);
+            }
+          });
+
+          content.appendChild(folderDiv); // Agregar la carpeta al contenedor principal
+        })
+        .catch(error => console.error(Error al cargar la carpeta ${folderName}:, error));
+    }
+
+    // Obtener la lista de carpetas en el repositorio
+    fetch(repoURL)
+      .then(response => response.json())
+      .then(items => {
+        items.forEach(item => {
+          if (item.type === 'dir') { // Verificar que es una carpeta
+            loadFolder(item.name, item.url);
+          }
+        });
+      })
+      .catch(error => console.error('Error al cargar las carpetas:', error));
+  </script>
+</body>
+</html>
